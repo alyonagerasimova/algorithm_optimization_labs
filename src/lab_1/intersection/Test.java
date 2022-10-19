@@ -1,4 +1,4 @@
-package intersection;
+package lab_1.intersection;
 
 import java.time.Duration;
 import java.time.Instant;

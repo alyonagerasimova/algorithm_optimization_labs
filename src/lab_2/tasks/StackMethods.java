@@ -1,4 +1,4 @@
-package tasks;
+package lab_2.tasks;
 
 import java.util.EmptyStackException;
 import java.util.NoSuchElementException;

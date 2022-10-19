@@ -1,3 +1,5 @@
+package lab_2;
+
 public class LinkedList {
     static LinkedListNode head;
 
