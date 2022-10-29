@@ -3,9 +3,10 @@ package lab_3;
 public class TreeNode {
     private Node root;
 
-    public TreeNode(){
+    public TreeNode() {
         root = null;
     }
+
     public Node findNodeByValue(int value) {
         Node currentNode = root;
         while (currentNode.getValue() != value) {
@@ -21,26 +22,51 @@ public class TreeNode {
         return currentNode;
     }
 
-    public static Node findMinNode(Node node){
-        if(node.left == null){
+    public static Node findMinNode(Node node) {
+        if (node.left == null) {
             return node;
-        }else {
+        } else {
             return findMinNode(node.left);
         }
     }
 
-//    6. Напишите алгоритм поиска «следующего» узла для заданного узла в бинарном дереве поиска. Считайте, что у каждого узла
+    public void insert(int value) {
+        Node newNode = new Node(value);
+        Node currentNode = root;
+        while (currentNode != null) {
+            if (newNode.value > currentNode.value) {
+                if (currentNode.right != null) {
+                    currentNode = currentNode.right;
+                }
+                else {
+                    newNode.parent = currentNode;
+                    currentNode.right = newNode;
+                    return;
+                }
+            }else {
+                if(currentNode.left != null){
+                    currentNode = currentNode.left;
+                }else {
+                    newNode.parent = currentNode;
+                    currentNode.left = newNode;
+                    return;
+                }
+            }
+        }
+    }
+
+    //    6. Напишите алгоритм поиска «следующего» узла для заданного узла в бинарном дереве поиска. Считайте, что у каждого узла
 //    есть ссылка на его родителя.
-    public static Node findNextNode(Node node){
-        if(node.right != null){
+    public static Node findNextNode(Node node) {
+        if (node.right != null) {
             return findMinNode(node.right);
         }
-        Node currentNode = node.parent;
-        while (currentNode != null && node == currentNode.right){
-            node = currentNode;
-            currentNode = currentNode.parent;
+        Node parent = node.parent;
+        while (parent != null && node != parent.left) {
+            node = parent;
+            parent = parent.parent;
         }
-        return currentNode;
+        return parent;
     }
 
     public static class Node {
@@ -85,7 +111,7 @@ public class TreeNode {
             this.parent = parent;
         }
 
-        public void printNode(){
+        public void printNode() {
             System.out.println(value);
         }
 
@@ -93,38 +119,48 @@ public class TreeNode {
 
     public static void main(String[] args) {
         Node root = new Node(8);
+        TreeNode treeNode = new TreeNode();
+        treeNode.root = root;
+        treeNode.insert(10);
+        treeNode.insert(3);
+        treeNode.insert(14);
+        treeNode.insert(13);
+        treeNode.insert(1);
+        treeNode.insert(6);
+        treeNode.insert(4);
+        treeNode.insert(7);
 
-        root.parent = null;
-        root.right = new Node(10);
-        root.left = new Node(4);
+//        root.parent = null;
+//        root.right = new Node(10);
+//        root.left = new Node(4);
+//
+//        root.right.parent = root;
+//        root.left.parent = root;
+//
+//        root.right.right = new Node(14);
+//        root.left.right = new Node(6);
+//        root.left.left = new Node(2);
+//
+//        root.right.right.parent = root.right;
+//        root.left.right.parent = root.left;
+//        root.left.left.parent = root.left;
+//
+//        root.left.left.left = new Node(1);
+//        root.right.right.left = new Node(13);
+//        root.left.right.right = new Node(7);
+//        root.left.right.left = new Node(5);
+//
+//        root.left.left.left.parent = root.left.left;
+//        root.right.right.left.parent = root.right.right;
+//        root.left.right.right.parent = root.left.right;
+//        root.left.right.left.parent = root.left.right;
 
-        root.right.parent = root;
-        root.left.parent = root;
-
-        root.right.right = new Node(14);
-        root.left.right = new Node(6);
-        root.left.left = new Node(2);
-
-        root.right.right.parent = root.right;
-        root.left.right.parent = root.left;
-        root.left.left.parent = root.left;
-
-        root.left.left.left = new Node(1);
-        root.right.right.left = new Node(13);
-        root.left.right.right = new Node(7);
-        root.left.right.left = new Node(5);
-
-        root.left.left.left.parent = root.left.left;
-        root.right.right.left.parent = root.right.right;
-        root.left.right.right.parent = root.left.right;
-        root.left.right.left.parent = root.left.right;
-
-        Node currentNode = root.left.left;
+        Node currentNode = treeNode.findNodeByValue(10);
         Node next = findNextNode(currentNode);
-        if(next != null){
-            System.out.println("Для узла со значением: " + currentNode.value);
+        if (next != null) {
+            System.out.println("Заданный узел: " + currentNode.value);
             System.out.println("Следующий узел: " + next.value);
-        }else {
+        } else {
             System.out.print("Следующего узела не существует");
         }
     }
