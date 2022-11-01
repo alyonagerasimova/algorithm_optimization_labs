@@ -155,7 +155,7 @@ public class TreeNode {
 //        root.left.right.right.parent = root.left.right;
 //        root.left.right.left.parent = root.left.right;
 
-        Node currentNode = treeNode.findNodeByValue(10);
+        Node currentNode = treeNode.findNodeByValue(6);
         Node next = findNextNode(currentNode);
         if (next != null) {
             System.out.println("Заданный узел: " + currentNode.value);
