@@ -161,7 +161,7 @@ public class TreeNode {
             System.out.println("Заданный узел: " + currentNode.value);
             System.out.println("Следующий узел: " + next.value);
         } else {
-            System.out.print("Следующего узела не существует");
+            System.out.print("Следующего узла не существует");
         }
     }
 }
