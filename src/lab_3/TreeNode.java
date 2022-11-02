@@ -26,7 +26,11 @@ public class TreeNode {
         if (node.left == null) {
             return node;
         } else {
-            return findMinNode(node.left);
+            while (node.left != null){
+                node = node.left;
+            }
+            return node;
+//            return findMinNode(node.left);
         }
     }
 
