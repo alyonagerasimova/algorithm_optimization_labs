@@ -1,5 +1,6 @@
 package lab_3;
 
+
 public class TreeNode {
     private Node root;
 
@@ -37,16 +38,15 @@ public class TreeNode {
             if (newNode.value > currentNode.value) {
                 if (currentNode.right != null) {
                     currentNode = currentNode.right;
-                }
-                else {
+                } else {
                     newNode.parent = currentNode;
                     currentNode.right = newNode;
                     return;
                 }
-            }else {
-                if(currentNode.left != null){
+            } else {
+                if (currentNode.left != null) {
                     currentNode = currentNode.left;
-                }else {
+                } else {
                     newNode.parent = currentNode;
                     currentNode.left = newNode;
                     return;
@@ -117,6 +117,18 @@ public class TreeNode {
 
     }
 
+//    public static int insertion(int N, int M, int i, int j) {
+//        int mask = 1 << i;
+//        for (int p = i; p < j; p++) {
+//            mask = mask | (mask << 1);
+//        }
+////        int max = ~0;
+////        int left = max - ((1 << (j + 1)) - 1);
+////        int right = ((1 << i) - 1);
+////        int mask = left | right;
+//        return (N & mask) | (M << i);
+//    }
+
     public static void main(String[] args) {
         Node root = new Node(8);
         TreeNode treeNode = new TreeNode();
@@ -163,5 +175,12 @@ public class TreeNode {
         } else {
             System.out.print("Следующего узела не существует");
         }
+
+////N = 10000000000, М = 10011, i = 2, j = 6 Вывод: N = 10001001100
+//        int N = (int) 10000000000L;
+//        int M = 10011;
+//        int i = 2;
+//        int j = 6;
+//        System.out.print(insertion(N, M, i, j));
     }
 }
