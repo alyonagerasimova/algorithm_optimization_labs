@@ -27,7 +27,11 @@ public class TreeNode {
         if (node.left == null) {
             return node;
         } else {
-            return findMinNode(node.left);
+            while (node.left != null){
+                node = node.left;
+            }
+            return node;
+//            return findMinNode(node.left);
         }
     }
 
@@ -167,13 +171,13 @@ public class TreeNode {
 //        root.left.right.right.parent = root.left.right;
 //        root.left.right.left.parent = root.left.right;
 
-        Node currentNode = treeNode.findNodeByValue(6);
+        Node currentNode = treeNode.findNodeByValue(7);
         Node next = findNextNode(currentNode);
         if (next != null) {
             System.out.println("Заданный узел: " + currentNode.value);
             System.out.println("Следующий узел: " + next.value);
         } else {
-            System.out.print("Следующего узела не существует");
+            System.out.print("Следующего узла не существует");
         }
 
 ////N = 10000000000, М = 10011, i = 2, j = 6 Вывод: N = 10001001100
