@@ -1,5 +1,7 @@
 package lab_5;
 
+import java.util.*;
+
 //10. Имеется 1000 бутылок лимонада, ровно одна из которых отравлена. Также у вас есть 10 тестовых полосок для обнаружения
 //        яда. Даже одна капля яда окрашивает полоску и делает ее непригодной для дальнейшего использования. На тестовую полоску
 //        можно одновременно нанести любое количество капель, и одна полоска может использоваться сколько угодно раз (при условии,
@@ -8,40 +10,41 @@ package lab_5;
 //        Напишите программную модель вашего решения.
 public class Test {
 
-    //1000 бутылок
-    //10 тестовых полосок, которые могут использоваться более 1 раза при отриц результате
-    //Испытания не чаще 1 раза в день
-    //После испытания для получения результата проходит 7 дней
-    //Минимальное количество дней, чтобы найти отравленную бутылку
+    static String toByteString(int number, int digits) {
+        return  String.format("%32s", Integer.toBinaryString(number))
+                .replace(' ', '0')
+                .substring(32 - digits);
+    }
 
+    static List<Integer> getColoredStripes(){
+        int numberOfStripes = 10;
+        List<Integer> coloredStripes = new ArrayList<>(numberOfStripes);
 
-    public static int findPoisonedBottle(){
-        int[] bottle = new int[1000];
-        int[] testStrip = new int[10];
-        int index = (int) (Math.random() * 10);
-        boolean test = false;
-        System.out.println(index);
+        System.out.println("Прошло 7 дней");
 
-        for (int i = 0; i < bottle.length; i++){
-            bottle[i] = i;
-            while(i < 10){
-                testStrip[i] = 1<<i;
+        for (int i = 0; i < numberOfStripes; i++){
+            if(Math.random() * 10 > 5){
+                coloredStripes.add(i);
             }
         }
-        for (int j = 0; j < bottle.length; ){
-            test = (j + testStrip[j]) == index;
-            j = j + 100;
-//            System.out.println("7 дней");
-        }
+        return coloredStripes;
+    }
 
-        if(test){
-            return index;
+    static int findPoisonedBottle(List<Integer> coloredStripes) {
+        int result = 0;
+        for(int i : coloredStripes) {
+            int mask = 1 << i;
+            result = result | mask;
+            System.out.println("№ полоски: " + i + ", двоичный флаг: " + toByteString(mask, 10));
         }
-
-        return 0;
+        return result;
     }
 
     public static void main(String[] args) {
-        findPoisonedBottle();
+        List<Integer> coloredStripes = getColoredStripes();
+        System.out.println("Окрашенные тестовые полоски: " + coloredStripes);
+        int foundPoisonedBottle = findPoisonedBottle(coloredStripes);
+        System.out.println("Отравленная бутылка - №" + foundPoisonedBottle + " = " + toByteString(foundPoisonedBottle, 10));
     }
 }
+
