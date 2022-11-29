@@ -10,10 +10,8 @@ import java.util.*;
 //        Напишите программную модель вашего решения.
 public class Test {
 
-    static String toByteString(int number, int digits) {
-        return  String.format("%32s", Integer.toBinaryString(number))
-                .replace(' ', '0')
-                .substring(32 - digits);
+    public static String padLeft(int number, int n) {
+        return String.format("%" + n + "s", Integer.toBinaryString(number)).replace(" ", "0");
     }
 
     static List<Integer> getColoredStripes(){
@@ -35,7 +33,7 @@ public class Test {
         for(int i : coloredStripes) {
             int mask = 1 << i;
             result = result | mask;
-            System.out.println("№ полоски: " + i + ", двоичный флаг: " + toByteString(mask, 10));
+            System.out.println("№ полоски: " + i + ", двоичный флаг: " + padLeft(mask, 10));
         }
         return result;
     }
@@ -44,7 +42,7 @@ public class Test {
         List<Integer> coloredStripes = getColoredStripes();
         System.out.println("Окрашенные тестовые полоски: " + coloredStripes);
         int foundPoisonedBottle = findPoisonedBottle(coloredStripes);
-        System.out.println("Отравленная бутылка - №" + foundPoisonedBottle + " = " + toByteString(foundPoisonedBottle, 10));
+        System.out.println("Отравленная бутылка - №" + foundPoisonedBottle + " = " + padLeft(foundPoisonedBottle, 10));
     }
 }
 
