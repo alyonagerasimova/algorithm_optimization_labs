@@ -20,9 +20,12 @@ public class Test {
 
         System.out.println("Прошло 7 дней");
 
+        int sum = 0;
+
         for (int i = 0; i < numberOfStripes; i++){
-            if(Math.random() * 10 > 5){
+            if(Math.random() * 10 > 5 && sum < 38){
                 coloredStripes.add(i);
+                sum += i;
             }
         }
         return coloredStripes;
