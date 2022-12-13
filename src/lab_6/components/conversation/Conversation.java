@@ -1,17 +1,23 @@
-package lab_6;
+package lab_6.components.conversation;
+
+import lab_6.components.Message;
+import lab_6.components.User;
 
 import java.util.*;
 
 public abstract class Conversation {
-    protected ArrayList<Participant> participants = new ArrayList<>();
+    protected ArrayList<User> users = new ArrayList<>();
     protected String id;
     protected ArrayList<Message> messages = new ArrayList<>();
 
     public ArrayList<Message> getMessages() {
-        for(Message mes : messages){
-            System.out.println("Content: " + "'" + mes.getContent() + "'" + ". Date: " + mes.getDate());
-        }
         return messages;
+    }
+
+    public void showMessageHistory() {
+        for (Message mes : messages) {
+            System.out.println("Text: " + "'" + mes.getText() + "'" + ". Date: " + mes.getDate());
+        }
     }
 
     public boolean addMessage(Message message) {

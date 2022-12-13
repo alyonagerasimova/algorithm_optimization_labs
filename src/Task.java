@@ -1,3 +1,6 @@
+import java.awt.*;
+import java.util.ArrayList;
+
 public class Task {
     //    public static void main(String[] args) {
 //        long n = 412;
@@ -30,28 +33,135 @@ public class Task {
 //        return count;
 //    }
 
+    //----------------------------------------2------------------------------------------------------------//
+    static ArrayList<Point> current_path = new ArrayList<Point>();
+
+//    public static boolean getPaths(int x, int y) {
+//        Point p = new Point(x, y);
+//        current_path.add(p);
+//        if (0 == x && 0 == y) return true; // current_path
+//        boolean success = false;
+//        if (x >= 1 && is_free(x - 1, y)) { // Try right
+//            success = getPaths(x - 1, y); // Free! Go right
+//        }
+//        if (!success && y >= 1 && is_free(x, y - 1)) { // Try down
+//            success = getPaths(x, y - 1); // Free! Go down
+//        }
+//        if (!success) {
+//            current_path.remove(p); // Wrong way!
+//        }
+//        return success;
+//    }
+
+    //----------------------------------------4------------------------------------------------------------//
+    ArrayList<ArrayList<Integer>> getSubsets(ArrayList<Integer> set, int index) {
+        ArrayList<ArrayList<Integer>> allsubsets;
+        if (set.size() == index) {
+            allsubsets = new ArrayList<ArrayList<Integer>>();
+            allsubsets.add(new ArrayList<Integer>()); // Empty set
+        } else {
+            allsubsets = getSubsets(set, index + 1);
+            int item = set.get(index);
+            ArrayList<ArrayList<Integer>> moresubsets =
+                    new ArrayList<ArrayList<Integer>>();
+            for (ArrayList<Integer> subset : allsubsets) {
+                ArrayList<Integer> newsubset = new ArrayList<Integer>();
+                newsubset.addAll(subset); //
+                newsubset.add(item);
+                moresubsets.add(newsubset);
+            }
+            allsubsets.addAll(moresubsets);
+        }
+        return allsubsets;
+    }
+
+    ArrayList<ArrayList<Integer>> getSubsets2(ArrayList<Integer> set) {
+        ArrayList<ArrayList<Integer>> allsubsets =
+                new ArrayList<ArrayList<Integer>>();
+        int max = 1 << set.size();
+        for (int i = 0; i < max; i++) {
+            ArrayList<Integer> subset = new ArrayList<Integer>();
+            int k = i;
+            int index = 0;
+            while (k > 0) {
+                if ((k & 1) > 0) {
+                    subset.add(set.get(index));
+                }
+                k >>= 1;
+                index++;
+            }
+            allsubsets.add(subset);
+        }
+        return allsubsets;
+    }
+
+    //----------------------------------------5------------------------------------------------------------//
+    static int multiplication(int a, int b) {
+//        if (b == 1 || b == 0)
+//            return a;
+//        else
+//            return a + multiplication(a, --b);
+
+        if (b == 0){
+            return 0;
+        }
+        int z = 0;
+        if ((b&1) != 0){
+            z = a;
+        }
+        return z + (multiplication(a,b>>1) << 1);
+    }
+
+    //----------------------------------------6------------------------------------------------------------//
+    public static ArrayList<String> getPerms(String s) {
+        ArrayList<String> permutations = new ArrayList<>();
+        if (s == null) {
+            return null;
+        } else if (s.length() == 0) {
+            permutations.add("");
+            return permutations;
+        }
+        char first = s.charAt(0);
+        String remainder = s.substring(1);
+        ArrayList<String> words = getPerms(remainder);
+        for (String word : words) {
+            for (int j = 0; j <= word.length(); j++) {
+                permutations.add(insertCharAt(word, first, j));
+            }
+        }
+        return permutations;
+    }
+
+    public static String insertCharAt(String word, char c, int i) {
+        String start = word.substring(0, i);
+        String end = word.substring(i);
+        return start + c + end;
+    }
+
+
     //----------------------------------------8------------------------------------------------------------//
     public static void printPar(int l, int r, char[] str, int count) {
-        if (l < 0 || r < l) return; // invalid state
+        if (l < 0 || r < l) return;
         if (l == 0 && r == 0) {
-            System.out.println(str); // found one, so print it
+            System.out.println(str);
         } else {
-            if (l > 0) { // try a left paren, if there are some available
+            if (l > 0) {
                 str[count] = '(';
                 printPar(l - 1, r, str, count + 1);
             }
-            if (r > l) { // try a right paren, if there’s a matching left
+            if (r > l) {
                 str[count] = ')';
                 printPar(l, r - 1, str, count + 1);
             }
         }
     }
 
-    //---------------------------------------9------------------------------------------------------------//
     public static void printPar(int count) {
         char[] str = new char[count * 2];
         printPar(count, count, str, 0);
     }
+
+    //---------------------------------------9------------------------------------------------------------//
 
     enum Color {
         Black, White, Red, Yellow, Green
@@ -144,7 +254,13 @@ public class Task {
         int n = 20;
         System.out.println(makeChange(n, 25));
 
-        PlaceQueen(8);
+//        PlaceQueen(8);
+
+        System.out.println("\nTask 6: ");
+        getPerms("abc").forEach(System.out::println);
+
+        System.out.println("\nTask 5: ");
+        System.out.println(multiplication(87,100));
     }
 }
 
